@@ -11,7 +11,9 @@ var DEBUG = 1;
 
 var BASE_URL = "";
 
-if(DEBUG==1){
+if (DEBUG == 2) {
+    var BASE_URL = "http://192.168.0.6/MDP/";
+}else if(DEBUG==1){
     var BASE_URL = "http://localhost/MDP/";
 }else{
     var BASE_URL = "http://10.23.3.101/MDP/";
