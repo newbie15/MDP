@@ -23,36 +23,51 @@ $(document).ready(function(){
 
                     colHeaders: [
                         '<br>Unit',
-                        'Suhu Coupling<br>(pulley / gearbox)',
-                        'Suhu<br>Bearing',
-                        'Suhu<br>Body',
-                        'Kondisi<br>Fan',
-                        'Seal<br>terminal',
-                        'Kabel<br>Gland',
+                        'Kabel<br>R-S',
+                        'Kabel<br>S-T',
+                        'Kabel<br>T-R',
+                        'Kabel<br>R-N',
+                        'Kabel<br>S-N',
+                        'Kabel<br>T-N',
+                        'Motor<br>R-S',
+                        'Motor<br>S-T',
+                        'Motor<br>T-R',
+                        'Motor<br>R-Body',
+                        'Motor<br>S-Body',
+                        'Motor<br>T-Body',
                     ],
 
-                    colWidths: [300, 150, 75, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
                     columns: [
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
-                        { type: 'checkbox' },
-                        { type: 'checkbox' },
-                        { type: 'checkbox' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
                     ]
                 });
+
+
             });
+
         }else{
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "motor/load",
+                url: BASE_URL + "megger/load",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
-                    periode: $("#periode").val(),
+                    // periode: $("#periode").val(),
                     tahun : $("#tahun").val(),
                 }
             }).done(function (msg) {
@@ -62,25 +77,38 @@ $(document).ready(function(){
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
+
                     colHeaders: [
                         '<br>Unit',
-                        'Suhu Coupling<br>(pulley / gearbox)',
-                        'Suhu<br>Bearing',
-                        'Suhu<br>Body',
-                        'Kondisi<br>Fan',
-                        'Seal<br>terminal',
-                        'Kabel<br>Gland',
+                        'Kabel<br>R-S',
+                        'Kabel<br>S-T',
+                        'Kabel<br>T-R',
+                        'Kabel<br>R-N',
+                        'Kabel<br>S-N',
+                        'Kabel<br>T-N',
+                        'Motor<br>R-S',
+                        'Motor<br>S-T',
+                        'Motor<br>T-R',
+                        'Motor<br>R-Body',
+                        'Motor<br>S-Body',
+                        'Motor<br>T-Body',
                     ],
 
-                    colWidths: [300,150, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
                     columns: [
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
-                        { type: 'checkbox' },
-                        { type: 'checkbox' },
-                        { type: 'checkbox' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
                     ]
@@ -96,12 +124,11 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"motor/simpan",
+            url: BASE_URL+"megger/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 station: $("#station").val(),
-                periode: $("#periode").val(),
                 tahun: $("#tahun").val(),
 
                 data_json: JSON.stringify(data_j),
@@ -114,12 +141,14 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "motor/load",
+            url: BASE_URL + "megger/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
-                periode: $("#periode").val(),
+                // periode: $("#periode").val(),
                 tahun: $("#tahun").val(),
+                // m: $("#bulan").val(),
+                // y: $("#tahun").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -151,20 +180,16 @@ $(document).ready(function(){
         ajax_refresh();
     });
 
-    $("#periode").change(function () {
-        ajax_refresh();
-    });
 
-
-    var tgl = new Date();
-    var m = tgl.getMonth() + 1;
-    if (m < 5) {
-        $("#periode").val("1");
-    } else if (m < 9) {
-        $("#periode").val("2");
-    } else {
-        $("#periode").val("3");
-    }
+    // var tgl = new Date();
+    // var m = tgl.getMonth() + 1;
+    // if (m < 5) {
+    //     $("#periode").val("1");
+    // } else if (m < 9) {
+    //     $("#periode").val("2");
+    // } else {
+    //     $("#periode").val("3");
+    // }
 
     station_refresh();
 

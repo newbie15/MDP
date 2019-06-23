@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Motor extends CI_Controller {
+class Megger extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,15 +22,14 @@ class Motor extends CI_Controller {
 	{
  		header('Access-Control-Allow-Origin: *');
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-		parent::__construct();
+	    	parent::__construct();
 	}
-
 	public function index()
 	{
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Inspeksi Mesin Berputar";
+		$output['main_title'] = "Data Inspeksi Megger Motor";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -44,7 +43,7 @@ class Motor extends CI_Controller {
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 
-			base_url("assets/mdp/motor.js"),
+			base_url("assets/mdp/megger.js"),
 		];
 		
 		$output['content'] = '';
@@ -90,7 +89,7 @@ class Motor extends CI_Controller {
 
 
 		$this->load->view('header',$header);
-		$this->load->view('content-motor',$output);
+		$this->load->view('content-megger',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -100,16 +99,13 @@ class Motor extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tahun = $_REQUEST['tahun'];
 		$station = $_REQUEST['id_station'];
-		$periode = $_REQUEST['periode'];
-
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		$query = $this->db->query("
-		SELECT m_motor.unit,suhu_coupling,suhu_bearing,suhu_body,kondisi_fan,seal_terminal,kabel_gland 
-		FROM m_motor RIGHT JOIN master_unit
-		ON master_unit.id_pabrik = m_motor.id_pabrik
-		AND master_unit.nama = m_motor.unit
-		where master_unit.id_pabrik = '$id_pabrik' AND m_motor.tahun = '$tahun'
-		AND m_motor.station = '$station' AND m_motor.periode = '$periode'
+		SELECT m_megger.unit,`kabel_rs`,`kabel_st`,`kabel_tr`,`kabel_rn`,`kabel_sn`,`kabel_tn`,`motor_rs`,`motor_st`,`motor_tr`,`motor_re`,`motor_se`,`motor_te`
+		FROM m_megger RIGHT JOIN master_unit
+		ON master_unit.id_pabrik = m_megger.id_pabrik
+		AND master_unit.nama = m_megger.unit
+		where master_unit.id_pabrik = '$id_pabrik' AND m_megger.tahun = '$tahun' AND m_megger.station = '$station'
 		");
 
 		$i = 0;
@@ -117,59 +113,53 @@ class Motor extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->unit;
-			$d[$i][1] = $row->suhu_coupling;
-			$d[$i][2] = $row->suhu_bearing;
-			$d[$i][3] = $row->suhu_body;
-			$d[$i][4] = $row->kondisi_fan;
-			$d[$i][5] = $row->seal_terminal;
-			$d[$i++][6] = $row->kabel_gland;
+			$d[$i][1] = $row->kabel_rs;
+			$d[$i][2] = $row->kabel_st;
+			$d[$i][3] = $row->kabel_tr;
+			$d[$i][4] = $row->kabel_rn;
+			$d[$i][5] = $row->kabel_sn;
+			$d[$i][6] = $row->kabel_tn;
+			$d[$i][7] = $row->motor_rs;
+			$d[$i][8] = $row->motor_st;
+			$d[$i][9] = $row->motor_tr;
+			$d[$i][10] = $row->motor_re;
+			$d[$i][11] = $row->motor_se;
+			$d[$i++][12] = $row->motor_te;
 		}
 		echo json_encode($d);
 	}
 
-	// public function load()
-	// {
-	// 	$id_pabrik = $_REQUEST['id_pabrik'];
-	// 	$query = $this->db->query("SELECT id_station,kode_asset,nama FROM master_unit where id_pabrik = '$id_pabrik';");
-
-	// 	$i = 0;
-	// 	$d = [];
-	// 	foreach ($query->result() as $row)
-	// 	{
-	// 		// $d[$i][0] = $row->nama; // access attributes
-	// 		$d[$i][0] = $row->id_station; // or methods defined on the 'User' class
-	// 		$d[$i][1] = $row->kode_asset; // or methods defined on the 'User' class
-	// 		$d[$i++][2] = $row->nama; // or methods defined on the 'User' class
-	// 	}
-	// 	echo json_encode($d);
-	// }
-
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		$station = $_REQUEST['station'];
 		$tahun = $_REQUEST['tahun'];
-		$periode = $_REQUEST['periode'];
-		$this->db->query("DELETE FROM `m_motor` where id_pabrik = '$pabrik' AND station = '$station' AND tahun = '$tahun' AND periode = '$periode' ");
+		$station = $_REQUEST['station'];
+		$this->db->query("DELETE FROM `m_megger` where id_pabrik = '$pabrik' AND tahun = '$tahun' AND station = '$station'");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
-				'tahun' => $tahun,
-				'periode' => $periode ,
 				'id_pabrik' => $pabrik,
+				'tahun' => $tahun,
 				'station' => $station,
 				'unit' => $value[0],
-				'suhu_coupling' => $value[1] ,
-				'suhu_bearing' => $value[2] ,
-				'suhu_body' => $value[3] ,
-				'kondisi_fan' => $value[4] ,
-				'seal_terminal' => $value[5] ,
-				'kabel_gland' => $value[6]
+				'kabel_rs' => $value[1],
+				'kabel_st' => $value[2],
+				'kabel_tr' => $value[3],
+				'kabel_rn' => $value[4],
+				'kabel_sn' => $value[5],
+				'kabel_tn' => $value[6],
+				'motor_rs' => $value[7],
+				'motor_st' => $value[8],
+				'motor_tr' => $value[9],
+				'motor_re' => $value[10],
+				'motor_se' => $value[11],
+				'motor_te' => $value[12],
+
 			);
-			// print_r($data);
-			$this->db->insert('m_motor', $data);
+			print_r($data);
+			$this->db->insert('m_megger', $data);
 		}
 	}
 
@@ -184,9 +174,9 @@ class Motor extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$a['name'] = $row->nama;
-				$a['id'] = $row->nama;
-				$d[$i++] = $a;
+			$a['name'] = $row->nama;
+			$a['id'] = $row->nama;
+			$d[$i++] = $a;
 		}
 		echo json_encode($d);
 	}
@@ -201,7 +191,7 @@ class Motor extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i++][0] = $row->nama; 
+			$d[$i++][0] = $row->nama; 
 		}
 		echo json_encode($d);
 	}
