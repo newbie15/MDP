@@ -168,6 +168,93 @@ class Display extends CI_Controller {
 		
 	}
 
+	private function _feedback_olah($pabrik,$tanggal){
+		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
+
+		$d = [];
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$d['tbs_olah'] = $row->tbs_olah;
+			$d['tbs_terima'] = $row->tbs_terima;
+			$d['taksasi'] = $row->taksasi;
+			$d['troughput_pom'] = $row->troughput_pom;
+			$d['er_cpo'] = $row->er_cpo;
+			$d['er_pko'] = $row->er_pko;
+			$d['er_kernel'] = $row->er_kernel;
+		}
+		return $d;
+	}
+
+	private function _feedback_pks($pabrik,$tanggal){
+		$query = $this->db->query("SELECT unit_1 FROM `o_feedback_pks` WHERE item = 'CPO Produksi' AND deskripsi = 'FFA' AND id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
+
+		$d = [];
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$d['FFA'] = $row->unit_1;
+		}
+		return $d;
+	}
+
+	public function view(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['tanggal'];
+		$kemarin = date('Y/m/d',strtotime("-1 days"));
+
+		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$kemarin';");
+		// echo "SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';";
+		$d = [];
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$d['tbs_olah'] = $row->tbs_olah;
+			$d['tbs_terima'] = $row->tbs_terima;
+			$d['taksasi'] = $row->taksasi;
+			$d['troughput_pom'] = $row->troughput_pom;
+			$d['er_cpo'] = $row->er_cpo;
+			$d['er_pko'] = $row->er_pko;
+			$d['er_kernel'] = $row->er_kernel;
+		}
+
+		$feedback_olah = $d;
+
+		@$data['tbs_olah'] = $feedback_olah['tbs_olah'];
+		@$data['tbs_terima'] = $feedback_olah['tbs_terima'];
+		@$data['taksasi'] = $feedback_olah['taksasi'];
+		@$data['troughput_pom'] = $feedback_olah['troughput_pom'];
+		@$data['er_cpo'] = $feedback_olah['er_cpo'];
+		@$data['er_pko'] = $feedback_olah['er_pko'];
+		@$data['er_kernel'] = $feedback_olah['er_kernel'];
+
+		$query = $this->db->query("SELECT taksasi FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
+		// echo "SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';";
+		$d = [];
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$d['taksasi'] = $row->taksasi;
+		}
+		@$data['taksasi_t'] = $d['taksasi'];
+
+		$query = $this->db->query("SELECT unit_1 FROM `o_feedback_pks` WHERE item = 'CPO Produksi' AND deskripsi = 'FFA' AND id_pabrik = '$pabrik' AND tanggal = '$kemarin';");
+		// echo "SELECT unit_1 FROM `o_feedback_pks` WHERE item = 'CPO Produksi' AND deskripsi = 'FFA' AND id_pabrik = '$pabrik' AND tanggal = '$tanggal';";
+		
+		$d = [];
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$d['FFA'] = $row->unit_1;
+		}
+
+		$feedback_pks = $d;
+
+		@$data['ffa'] = $feedback_pks['FFA'];
+
+		echo json_encode($data);
+	}
+
 	public function maintenance(){
 		$output = "";
 

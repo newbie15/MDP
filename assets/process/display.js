@@ -34,6 +34,13 @@ $(document).ready(function(){
     var y = tgl.getFullYear();
     var d = tgl.getDate();
 
+    var b = 0;
+    if((m+1)<10){
+        b = "0"+(m+1);
+    }else{
+        b = m+1;
+    }
+
     tgl.setDate(tgl.getDate() - 1);
     
     var kemarin = tgl;
@@ -42,53 +49,73 @@ $(document).ready(function(){
     var yk = kemarin.getFullYear();
     var dk = kemarin.getDate();
 
+    $("#today").html(d + " " + bulan[m] + " " + y);
+    $("#yesterday").html(dk + " " + bulan[mk] + " " + yk);
 
-
-    var app = new Vue({
-        el: '#app',
+    $.ajax({
+        method: "POST",
+        url: BASE_URL + "display/view",
         data: {
-            today: d+" "+bulan[m]+" "+y ,
-            yesterday: dk + " " + bulan[mk] + " " + yk,
-            
-            taksasi_t: '',
-            start_t: '',
-            jam_t: '',
-
-            ffa_hi: '',
-            ffa_shi: '',
-            taksasi_y: '',
-            taksasi_vs_real: '',
-
-            er_cpo_hi: '',
-            er_cpo_shi: '',
-
-            tbs_terima_hi : '',
-            tbs_terima_shi: '',
-
-            tbs_olah_hi : '',
-            tbs_olah_shi: '',
-
-            er_kernel_hi : '',
-            er_kernel_shi: '',
-
-            throughput_hi: '',
-            throughput_shi: '',
-
-            throughput_hi: '',
-            throughput_shi: '',
-
-            breakdown_hi: '',
-            breakdown_shi: '',
-
-            er_pko_hi: '',
-            er_pko_shi: '',
-
-            stok_cpo: '',
-            stok_kernel: '',
-
-            stok_pko: '',
-            stok_pke: '',
+            pabrik: $("#pabrik").val(),
+            tanggal: y+"/"+b+"/"+d,
         }
-    })
+    }).done(function (msg) {
+        console.log(msg);
+        var dx = JSON.parse(msg);
+
+        $("#ffa_hi").html(((dx['ffa'])*1.0).toFixed(2) + " %");
+        $("#taksasi_y").html(dx['taksasi']);
+        $("#taksasi_t").html(dx['taksasi_t']);
+
+        $("#start_t").html("07:00");
+        $("#jam_t").html((dx['taksasi_t']/80000.0).toFixed(2)+ " jam");
+
+        $("#tbs_terima_hi ").html(dx['tbs_terima']);
+        $("#tbs_olah_hi ").html(dx['tbs_olah']);
+        $("#er_cpo_hi").html(((dx['er_cpo'])*1.0).toFixed(2) +" %");
+        $("#er_kernel_hi ").html(((dx['er_kernel'])*1.0).toFixed(2) + " %");
+        $("#er_pko_hi").html(((dx['er_pko'])*1.0).toFixed(2) + " %");
+        $("#throughput_hi").html(dx['troughput_pom']);
+        $("#taksasi_vs_real").html(((dx['tbs_terima'] / dx['taksasi'])*100.0).toFixed(2)+" %");
+    });
+
+    // $("#taksasi_t").load(BASE_URL + "display/taksasi_t");
+    // $("#start_t").load(BASE_URL + "display/start_t");
+    // $("#jam_t").load(BASE_URL + "display/jam_t");
+
+    // $("#ffa_hi").load(BASE_URL + "display/");
+    // $("#ffa_shi").load(BASE_URL + "display/");
+    // $("#taksasi_y").load(BASE_URL + "display/");
+    // $("#taksasi_vs_real").load(BASE_URL + "display/");
+
+    // $("#er_cpo_hi").load(BASE_URL + "display/");
+    // $("#er_cpo_shi").load(BASE_URL + "display/");
+
+    // $("#tbs_terima_hi ").load(BASE_URL + "display/");
+    // $("#tbs_terima_shi").load(BASE_URL + "display/");
+
+    // $("#tbs_olah_hi ").load(BASE_URL + "display/");
+    // $("#tbs_olah_shi").load(BASE_URL + "display/");
+
+    // $("#er_kernel_hi ").load(BASE_URL + "display/");
+    // $("#er_kernel_shi").load(BASE_URL + "display/");
+
+    // $("#throughput_hi").load(BASE_URL + "display/");
+    // $("#throughput_shi").load(BASE_URL + "display/");
+
+    // $("#throughput_hi").load(BASE_URL + "display/");
+    // $("#throughput_shi").load(BASE_URL + "display/");
+
+    // $("#breakdown_hi").load(BASE_URL + "display/");
+    // $("#breakdown_shi").load(BASE_URL + "display/");
+
+    // $("#er_pko_hi").load(BASE_URL + "display/");
+    // $("#er_pko_shi").load(BASE_URL + "display/");
+
+    // $("#stok_cpo").load(BASE_URL + "display/");
+    // $("#stok_kernel").load(BASE_URL + "display/");
+
+    // $("#stok_pko").load(BASE_URL + "display/");
+    // $("#stok_pke").load(BASE_URL + "display/");
 
 });

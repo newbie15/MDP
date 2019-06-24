@@ -118,42 +118,42 @@
     </h1>
     <table class="tbl" width="100%" border="5" cellpadding="5" cellspacing="5">
       <tr>
-        <td colspan="3" class="biggreen">Rencana Kerja {{ today }}</td>
+        <td colspan="3" class="biggreen">Rencana Kerja <span id="today"></span></td>
       </tr>
       <tr>
-        <td class="green">Taksasi (KG)<br>{{ taksasi_t }}</td>
-        <td class="green">Start Olah<br>{{ start_t }}</td>
-        <td class="green">Jam Olah<br>{{ jam_t }}</td>
+        <td class="green">Taksasi (KG)<br><span id="taksasi_t"></span></td>
+        <td class="green">Start Olah<br><span id="start_t"></span></td>
+        <td class="green">Jam Olah<br><span id="jam_t"></span></td>
       </tr>
     </table>
 
     <table class="tbl" width="100%" border="5" cellpadding="5" cellspacing="5">
       <tr>
-        <td colspan="3" class="biggreen">Laporan Proses {{ yesterday }}</td>
+        <td colspan="3" class="biggreen">Laporan Proses <span id="yesterday"></span></td>
       </tr>
       <tr>
-        <td class="green">FFA<br>{{ ffa_hi }}<br>{{ ffa_shi }}</td>
-        <td class="green">Taksasi (KG)<br>{{ taksasi_y }}</td>
-        <td class="green">Taksasi vs Real<br>{{ taksasi_vs_real }}</td>
+        <td class="green">FFA<br><span id="ffa_hi"><br><span id="ffa_shi"></span></td>
+        <td class="green">Taksasi (KG)<br><span id="taksasi_y"></span></td>
+        <td class="green">Taksasi vs Real<br><span id="taksasi_vs_real"></span></td>
       </tr>
       <tr>
-        <td class="green">ER CPO<br>{{ er_cpo_hi }}<br>{{ er_cpo_shi }}</td>
-        <td class="green">TBS Terima<br>{{ tbs_terima_hi }}<br>{{ tbs_terima_shi }}</td>
-        <td class="green">TBS Olah<br>{{ tbs_olah_hi }}<br>{{ tbs_olah_shi }}</td>
+        <td class="green">ER CPO<br><span id="er_cpo_hi"><br><span id="er_cpo_shi"></span></td>
+        <td class="green">TBS Terima<br><span id="tbs_terima_hi"><br><span id="tbs_terima_shi"></span></td>
+        <td class="green">TBS Olah<br><span id="tbs_olah_hi"><br><span id="tbs_olah_shi"></span></td>
       </tr>
       <tr>
-        <td class="green">ER Kernel<br>{{ er_kernel_hi }}<br>{{ er_kernel_shi }}</td>
-        <td class="green">Throughput<br>{{ throughput_hi }}<br>{{ throughput_shi }}</td>
-        <td class="green">Breakdown<br>{{ breakdown_hi }}<br>{{ breakdown_shi }}</td>
+        <td class="green">ER Kernel<br><span id="er_kernel_hi"><br><span id="er_kernel_shi"></span></td>
+        <td class="green">Throughput<br><span id="throughput_hi"><br><span id="throughput_shi"></span></td>
+        <td class="green">Breakdown<br><span id="breakdown_hi"><br><span id="breakdown_shi"></span></td>
       </tr>
       <tr>
-        <td rowspan ="2" class="green">ER PKO<br>{{ er_pko_hi }}<br>{{ er_pko_shi }}</td>
-        <td class="green">Stock CPO (KG)<br>{{ stok_cpo }}</td>
-        <td class="green">Stock Kernel (KG)<br>{{ stok_kernel }}</td>
+        <td rowspan ="2" class="green">ER PKO<br><span id="er_pko_hi"><br><span id="er_pko_shi"></span></td>
+        <td class="green">Stock CPO (KG)<br><span id="stok_cpo"></span></td>
+        <td class="green">Stock Kernel (KG)<br><span id="stok_kernel"></span></td>
       </tr>
       <tr>
-        <td class="green">Stock PKO (KG)<br>{{ stok_pko }}</td>
-        <td class="green">Stock PKE (KG)<br>{{ stok_pke }}</td>
+        <td class="green">Stock PKO (KG)<br><span id="stok_pko"></span></td>
+        <td class="green">Stock PKE (KG)<br><span id="stok_pke"></span></td>
       </tr>
     </table>
   </div>
