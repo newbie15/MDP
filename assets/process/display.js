@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    var d1 = [];
-    for (var i = 0; i < 14; i += 0.5) {
-        d1.push([i, Math.sin(i)]);
-    }
+    // var d1 = [];
+    // for (var i = 0; i < 14; i += 0.5) {
+    //     d1.push([i, Math.sin(i)]);
+    // }
     var d1 = [
         [1, null],
         [2, null],
@@ -111,6 +111,7 @@ $(document).ready(function(){
     $.plot("#g1", [d1]);
     $.plot("#g2", [d2]);
     $.plot("#g3", [d3]);
+    
     // $.plot("#g1", [d1, d2, d3]);
 
 
@@ -177,6 +178,13 @@ $(document).ready(function(){
         $("#er_pko_hi").html(((dx['er_pko'])*1.0).toFixed(2) + " %");
         $("#throughput_hi").html(dx['troughput_pom']);
         $("#taksasi_vs_real").html(((dx['tbs_terima'] / dx['taksasi'])*100.0).toFixed(2)+" %");
+
+        $("#stok_cpo").html(((dx['s_cpo']) * 1.0).toFixed(2) + " kg");
+        $("#stok_kernel ").html(((dx['s_kernel']) * 1.0).toFixed(2) + " kg");
+        $("#stok_pko").html(((dx['s_pko']) * 1.0).toFixed(2) + " kg");
+        $("#stok_pke").html(((dx['s_pke']) * 1.0).toFixed(2) + " kg");
+        $("#breakdown_hi").html(((dx['breakdown']) * 1.0).toFixed(2) + " jam");
+
     });
 
     // $("#taksasi_t").load(BASE_URL + "display/taksasi_t");

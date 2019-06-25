@@ -169,7 +169,7 @@ class Display extends CI_Controller {
 	}
 
 	private function _feedback_olah($pabrik,$tanggal){
-		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
+		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel,s_cpo,s_pko,s_kernel,s_pke FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
 
 		$d = [];
 		$i = 0;
@@ -182,6 +182,11 @@ class Display extends CI_Controller {
 			$d['er_cpo'] = $row->er_cpo;
 			$d['er_pko'] = $row->er_pko;
 			$d['er_kernel'] = $row->er_kernel;
+			$d['s_cpo'] = $row->s_cpo;
+			$d['s_pko'] = $row->s_pko;
+			$d['s_pke'] = $row->s_pke;
+			$d['s_kernel'] = $row->s_kernel;
+
 		}
 		return $d;
 	}
@@ -203,8 +208,10 @@ class Display extends CI_Controller {
 		$tanggal = $_REQUEST['tanggal'];
 		$kemarin = date('Y/m/d',strtotime("-1 days"));
 
-		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$kemarin';");
+		// $query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$kemarin';");
 		// echo "SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';";
+		$query = $this->db->query("SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel,s_cpo,s_pko,s_kernel,s_pke,breakdown FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$kemarin';");
+
 		$d = [];
 		$i = 0;
 		foreach ($query->result() as $row)
@@ -216,6 +223,11 @@ class Display extends CI_Controller {
 			$d['er_cpo'] = $row->er_cpo;
 			$d['er_pko'] = $row->er_pko;
 			$d['er_kernel'] = $row->er_kernel;
+			$d['s_cpo'] = $row->s_cpo;
+			$d['s_pko'] = $row->s_pko;
+			$d['s_pke'] = $row->s_pke;
+			$d['s_kernel'] = $row->s_kernel;
+			$d['breakdown'] = $row->breakdown;
 		}
 
 		$feedback_olah = $d;
@@ -227,6 +239,11 @@ class Display extends CI_Controller {
 		@$data['er_cpo'] = $feedback_olah['er_cpo'];
 		@$data['er_pko'] = $feedback_olah['er_pko'];
 		@$data['er_kernel'] = $feedback_olah['er_kernel'];
+		@$data['s_cpo'] = $feedback_olah['s_cpo'];
+		@$data['s_pko'] = $feedback_olah['s_pko'];
+		@$data['s_pke'] = $feedback_olah['s_pke'];
+		@$data['s_kernel'] = $feedback_olah['s_kernel'];
+		@$data['breakdown'] = $feedback_olah['breakdown'];
 
 		$query = $this->db->query("SELECT taksasi FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
 		// echo "SELECT tbs_olah,tbs_terima,taksasi,troughput_pom,er_cpo,er_pko,er_kernel FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';";

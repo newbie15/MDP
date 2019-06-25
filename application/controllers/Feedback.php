@@ -134,7 +134,7 @@ class Feedback extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		
 		$olah = $this->db->query("SELECT 
-			`tbs_olah`,`tbs_terima`,`taksasi`,`rata_lori`,`er_cpo`,`er_kernel`,`er_pko`,`troughput_pom`,`troughtput_kcp`,`pemakaian_air`,`oil_content_kernel`,`sludge_olah`,`usb`,`press_cake`,`tandan_kosong`,`heavy_phase`,`wet_nut`,`total_abs_loss`,`destoner`,`fiber_cyclone`,`ltds1`,`ltds2`,`hydrocyclone`,`total_kernel_loss`
+			`tbs_olah`,`tbs_terima`,`taksasi`,`rata_lori`,`er_cpo`,`er_kernel`,`er_pko`,`troughput_pom`,`troughtput_kcp`,`pemakaian_air`,`oil_content_kernel`,`sludge_olah`,`s_cpo`,`s_pko`,`s_kernel`,`s_pke`,`breakdown`,`usb`,`press_cake`,`tandan_kosong`,`heavy_phase`,`wet_nut`,`total_abs_loss`,`destoner`,`fiber_cyclone`,`ltds1`,`ltds2`,`hydrocyclone`,`total_kernel_loss`
 			FROM o_feedback_olah where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';
 		");
 
@@ -154,18 +154,24 @@ class Feedback extends CI_Controller {
 			$o[$i][9]= $row->pemakaian_air;
 			$o[$i][10]= $row->oil_content_kernel;
 			$o[$i][11]= $row->sludge_olah;
-			$o[$i][12]= $row->usb;
-			$o[$i][13]= $row->press_cake;
-			$o[$i][14]= $row->tandan_kosong;
-			$o[$i][15]= $row->heavy_phase;
-			$o[$i][16]= $row->wet_nut;
-			$o[$i][17]= $row->total_abs_loss;
-			$o[$i][18]= $row->destoner;
-			$o[$i][19]= $row->fiber_cyclone;
-			$o[$i][20]= $row->ltds1;
-			$o[$i][21]= $row->ltds2;
-			$o[$i][22]= $row->hydrocyclone;
-			$o[$i++][23]= $row->total_kernel_loss;
+			$o[$i][12]= $row->s_cpo;
+			$o[$i][13]= $row->s_pko;
+			$o[$i][14]= $row->s_kernel;
+			$o[$i][15]= $row->s_pke;
+			$o[$i][16]= $row->breakdown;
+
+			$o[$i][17]= $row->usb;
+			$o[$i][18]= $row->press_cake;
+			$o[$i][19]= $row->tandan_kosong;
+			$o[$i][20]= $row->heavy_phase;
+			$o[$i][21]= $row->wet_nut;
+			$o[$i][22]= $row->total_abs_loss;
+			$o[$i][23]= $row->destoner;
+			$o[$i][24]= $row->fiber_cyclone;
+			$o[$i][25]= $row->ltds1;
+			$o[$i][26]= $row->ltds2;
+			$o[$i][27]= $row->hydrocyclone;
+			$o[$i++][28]= $row->total_kernel_loss;
 		}
 
 
@@ -318,6 +324,11 @@ class Feedback extends CI_Controller {
 			'pemakaian_air' => $olah[9][1],
 			'oil_content_kernel' => $olah[10][1],
 			'sludge_olah' => $olah[11][1],
+			's_cpo' => $olah[12][1],
+			's_pko' => $olah[13][1],
+			's_kernel' => $olah[14][1],
+			's_pke' => $olah[15][1],
+			'breakdown' => $olah[16][1],
 
 			'usb' => $absloss[0][1],
 			'press_cake' => $absloss[1][1],

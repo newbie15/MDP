@@ -140,6 +140,8 @@ $(document).ready(function () {
         ["Stock PKO (kg)", ""],
         ["Stock Kernel (kg)", ""],
         ["Stock PKE (kg)", ""],
+        ["Breakdown (jam)", ""],
+
 
     ];
 
@@ -156,6 +158,11 @@ $(document).ready(function () {
         ["Pemakaian Air/TBS Olah(Maks 1M³/T)", ""],
         ["Oil Content Kernel Olah", ""],
         ["Sludge ter olah/produksi sludge ", ""],
+        ["Stock CPO (kg)", ""],
+        ["Stock PKO (kg)", ""],
+        ["Stock Kernel (kg)", ""],
+        ["Stock PKE (kg)", ""],
+        ["Breakdown (jam)", ""],
     ];
 
     data_detail = [];
